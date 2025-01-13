@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload & Virus Scan</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: #f3f4f6;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #fileInput {
+            margin: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            margin: 20px;
+            border: 5px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 5px solid #4CAF50;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Message styling */
+        #resultMessage {
+            font-size: 18px;
+            margin-top: 15px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload a File to Check for Viruses</h1>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Scan File</button>
+    <div class="spinner" id="loadingSpinner"></div>
+    <p id="resultMessage"></p>
+
+    <script>
+        function uploadFile() {
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            var resultMessage = document.getElementById('resultMessage');
+            var loadingSpinner = document.getElementById('loadingSpinner');
+
+            if (!file) {
+                resultMessage.innerText = "Please select a file.";
+                return;
+            }
+
+            resultMessage.innerText = ""; // Clear previous messages
+            loadingSpinner.style.display = "block"; // Show loading spinner
+
+            var formData = new FormData();
+            formData.append('file', file);
+
+            // Send the file to the backend
+            fetch('http://127.0.0.1:5000/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    resultMessage.innerText = `Error: ${data.error}`;
+                } else {
+                    resultMessage.innerText = data.message;
+                }
+            })
+            .catch(error => {
+                console.error("Error during file scan:", error);
+                resultMessage.innerText = "Failed to scan the file.";
+            })
+            .finally(() => {
+                loadingSpinner.style.display = "none"; // Hide loading spinner
+            });
+        }
+    </script>
+</body>
+</html>
