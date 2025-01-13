@@ -1,2 +1,5 @@
 # Advanced Network-intrusion-system
 The project develops a real-time Network Intrusion Detection System (NIDS) using advanced machine learning to detect and classify intrusions and anomalies. It addresses the limitations of traditional security in complex networks by enabling automated threat response and proactive measures, enhancing overall protection for a secure network system.
+This project focuses on building a real-time Network Intrusion Detection System (NIDS) leveraging advanced machine learning techniques to identify and classify network intrusions and anomalies. It overcomes the limitations of traditional security systems, which often struggle with detecting sophisticated threats in complex network environments. By automating threat detection and enabling proactive responses, the system enhances overall network security and minimizes the risks associated with undetected intrusions. The solution integrates seamlessly with existing infrastructure, providing robust protection and ensuring a more resilient and secure network system, capable of adapting to evolving threats in real-time.
+
+Dataset : ADDED ABOVE IN THE UPLOADED FILES
